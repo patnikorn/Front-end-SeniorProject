@@ -7,16 +7,12 @@
       <v-row justify="center">
       <v-col cols="12">
         <div class="mt-8 text-primary text-announce text-center">
-          เสียใจด้วย!
+          รอการอนุมัติ
         </div>
       </v-col>
       <v-col cols="12">
         <div class="mt-8 text-center">
-          คุณไม่ผ่านการคัดเลือก <br />
-          กลุ่มวิชา xxx 
-        </div>
-        <div class="mt-8 text-center">
-          คุณจะถูกคัดให้อยู่กลุ่มวิชาที่มีที่นั่งเหลืออยู่ทันที
+          กรุณารอการจัดกลุ่มวิชาจากอาจารย์ผู้รับผิดชอบ
         </div>
       </v-col>
       <v-col cols="12">

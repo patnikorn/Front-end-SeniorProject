@@ -31,7 +31,7 @@
               dark
               class="w-100 my-btn"
               @click="submit()"
-              >ลงประกาศ</v-btn
+              >บันทึกและลงประกาศ</v-btn
             >
             <v-btn
               depressed
@@ -67,12 +67,11 @@ export default {
         subTitle: this.subTitle,
       };
       console.log(this.id, this.title, this.subTitle);
-      Axios.post("http://localhost:4000/annoucement/update", data).then((res) =>{
-        console.log(res.data.data)
-        this.$router.push("/teacher/announcement");
-      }
-        
-        
+      Axios.post("http://localhost:4000/annoucement/update", data).then(
+        (res) => {
+          console.log(res.data.data);
+          this.$router.push("/teacher/announcement");
+        }
       );
     },
   },

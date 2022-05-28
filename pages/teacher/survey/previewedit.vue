@@ -7,7 +7,9 @@
       <v-row justify="center">
         <v-col cols="11">
           <div class="mt-2 text-primary text-title text-center">
+            
             {{ title }}
+            
           </div>
         </v-col>
         <v-col cols="11">
@@ -45,7 +47,7 @@
             dark
             class="w-100 mt-5 my-btn"
             @click="submit"
-            >บันทึกแบบสำรวจ</v-btn
+            >บันทึกแก้ไขแบบสำรวจ</v-btn
           >
           <v-btn
             depressed
@@ -66,17 +68,18 @@ import Axios from "axios";
 export default {
   data() {
     return {
+      id: null,
       subject: null,
       accept: null,
     };
   },
   methods: {
     back() {
-      // this.$router.push("/teacher/survey/create");
+      // this.$router.push("/teacher/survey/edit");
       this.$router.push({
-        path: "/teacher/survey/create",
+        path: "/teacher/survey/edit",
         query: {
-          // id: this.id,
+          id: this.id,
           title: this.title,
           subTitle: this.subTitle,
           question: this.question,
@@ -87,6 +90,7 @@ export default {
     },
     submit() {
       const data = {
+        id: this.id,
         title: this.title,
         subTitle: this.subTitle,
         question: this.question,
@@ -94,26 +98,29 @@ export default {
         numberStudentSI: this.numberStudentSI,
       };
       console.log(
+        this.id,
         this.title,
         this.subTitle,
         this.question,
         this.numberStudentDS,
         this.numberStudentSI
       );
-      Axios.post("http://localhost:4000/survey", data).then((res) => {
+      Axios.post("http://localhost:4000/survey/update", data).then((res) => {
         console.log(res.data.data);
         this.$router.push("/teacher/survey");
       });
     },
   },
   beforeMount() {
-    console.log(
+    console.log( 
+      this.$route.query.id,
       this.$route.query.title,
       this.$route.query.subTitle,
       this.$route.query.question,
       this.$route.query.numberStudentDS,
       this.$route.query.numberStudentSI
     );
+    this.id = this.$route.query.id;
     this.title = this.$route.query.title;
     this.subTitle = this.$route.query.subTitle;
     this.question = this.$route.query.question;

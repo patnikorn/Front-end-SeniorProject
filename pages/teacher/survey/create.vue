@@ -13,7 +13,7 @@
         <v-col cols="12">
           <v-form class="pt-0 pb-0">
             <v-text-field
-              v-model="Title"
+              v-model="form.title"
               label="ชื่อฟอร์ม"
               auto-grow
               outlined
@@ -22,14 +22,14 @@
             <v-textarea
               outlined
               auto-grow
-              v-model="Subtitle"
+              v-model="form.subTitle"
               label="คำอธิบายแบบฟอร์ม"
             ></v-textarea>
             <v-divider></v-divider>
             <p class="mt-5 pt-0">กลุ่มวิชาวิทยาการข้อมูล (Data Science)</p>
 
             <v-text-field
-              v-model="numberStudentDS"
+              v-model="form.numberStudentDS"
               label="จำนวน"
               outlined
               dense
@@ -38,7 +38,7 @@
             />
             <p>กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)</p>
             <v-text-field
-              v-model="numberStudentSI"
+              v-model="form.numberStudentSI"
               label="จำนวน"
               outlined
               dense
@@ -48,7 +48,7 @@
             <v-divider></v-divider>
             <v-textarea
               class="mt-5 pt-0"
-              v-model="Question"
+              v-model="form.question"
               label="คำถามที่ไม่ระบุชื่อ"
               auto-grow
               outlined
@@ -59,7 +59,7 @@
               color="second"
               dark
               class="w-100 mt-5 my-btn"
-              @click="next"
+              @click="previewform"
               >ดูตัวอย่างฟอร์ม</v-btn
             >
           </v-form>
@@ -70,17 +70,63 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
   data() {
     return {
-      DataScience: true,
-      SoftwareInnovation: true,
+      form: {
+        title: "",
+        subTitle: "",
+        question: "",
+        numberStudentDS: "",
+        numberStudentSI: "",
+        DataScience: true,
+        SoftwareInnovation: true,
+      },
     };
   },
   methods: {
-    next() {
-        this.$router.push("/teacher/survey/preview");
-     
+    validate() {
+      let validated = true;
+      const errors = [];
+      const validatorField = [
+        "title",
+        "subTitle",
+        "question",
+        "numberStudentDS",
+        "numberStudentSI",
+      ];
+      validatorField.forEach((field) => {
+        if (this.form[field] == "") {
+          validated = false;
+          errors.push(`${field} ไม่สามารถว่างได้`);
+        }
+      });
+      if (!validated) {
+        this.$store.dispatch("setDialog", {
+          isShow: true,
+          title: "กรอกข้อมูลไม่สำเร็จ",
+          message: errors.map((error) => error + "<br />").join(""),
+        });
+      }
+      return validated;
+    },
+    previewform() {
+      this.$router.push("/teacher/survey/preview");
+        this.$router.push({
+        path: "/teacher/survey/preview",
+        query: {title: this.form.title, subTitle: this.form.subTitle, question: this.form.question, numberStudentDS: this.form.numberStudentDS, numberStudentSI: this.form.numberStudentSI},
+      });
+      // this.$router.push({
+      //   path: "/teacher/survey/preview",
+      //   query: {title: this.form.title, subTitle: this.form.subTitle, question: this.form.question, numberStudentDS: this.form.numberStudentDS, numberStudentSI: this.form.numberStudentSI},
+      // });
+      if (this.validate()) {
+        // Axios.post("http://localhost:4000/survey", data).then((res) => {
+        //   console.log(res.data.data);
+        //   this.$router.push("/teacher/survey/preview");
+        // });
+      }
     },
   },
 };

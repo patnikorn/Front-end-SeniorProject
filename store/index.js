@@ -19,6 +19,13 @@ export const state = () => ({
         complaintLastName: '',
         complaintStudentId: '',
         complaintText: '',
+    },
+    survey: {
+        title: '',
+        subTitle: '',
+        question: '',
+        numberStudentDS: '',
+        numberStudentSI: '',
     }
 })
 
@@ -34,6 +41,9 @@ export const getters = {
     },
     getComplaint(state){
         return state.complaint
+    },
+    getSurvey(state){
+        return state.survey
     }
 }
 
@@ -61,6 +71,12 @@ export const mutations = {
             ...state.complaint,
             ...data
         }
+    },
+    SET_SURVEY(state, data){
+        state.survey = {
+            ...state.survey,
+            ...data
+        }
     }
 }
 
@@ -76,5 +92,8 @@ export const actions = {
     },
     setComplaint({ commit }, data){
         commit('SET_COMPLAINT', data)
+    },
+    setSurvey({ commit }, data ) {
+        commit('SET_SURVEY', data)
     }
 }

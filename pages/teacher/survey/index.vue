@@ -21,75 +21,62 @@
           </v-btn>
           <br />
           <br />
-          <v-row justify="center">
-            <v-col cols="1"> 1 </v-col>
-            <v-col cols="6" md="auto">
-              การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี 2565
-            </v-col>
-            <v-col cols="3">
-              <v-btn icon color="indigo" @click="editSurvey">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-dialog v-model="deleteSurvey" persistent max-width="290">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon small v-bind="attrs" v-on="on" color="error">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title class="text-primary">
-                    ยืนยันการลบ
-                  </v-card-title>
-                  <v-card-text>คุณแน่ใจหรือว่าต้องการลบฟอร์มนี้?</v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
+          <div v-for="(item, n) in this.data" :key="item.id">
+            <v-row justify="center">
+              <v-col cols="1"> {{ n + 1 }} </v-col>
+              <v-col cols="6" md="auto">
+                {{ item.title }}
+                <!-- การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี 2565 -->
+              </v-col>
+              <v-col cols="3">
+                <v-btn
+                  icon
+                  color="indigo"
+                  @click="
+                    editSurvey(
+                      item.id,
+                      item.title,
+                      item.subTitle,
+                      item.question,
+                      item.numberStudentDS,
+                      item.numberStudentSI
+                    )
+                  "
+                >
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-dialog v-model="deleteSurvey" persistent max-width="290">
+                  <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                      color="indigo"
-                      text
-                      @click="deleteSurvey = false"
-                    >
-                      ยกเลิก
-                    </v-btn>
-                    <v-btn
+                      icon
+                      small
+                      v-bind="attrs"
+                      v-on="on"
                       color="error"
-                      text
-                      @click="deleteSurvey = false"
+                      @click="setid(item.id)"
                     >
-                      ยืนยัน
+                      <v-icon>mdi-delete</v-icon>
                     </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="1"> 2 </v-col>
-            <v-col cols="6" md="auto">
-              การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี 2566
-            </v-col>
-            <v-col cols="3">
-              <v-btn icon color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="1"> 3 </v-col>
-            <v-col cols="6" md="auto">
-              การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี 2567
-            </v-col>
-            <v-col cols="3">
-              <v-btn icon color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
+                  </template>
+                  <v-card>
+                    <v-card-title class="text-primary">
+                      ยืนยันการลบ
+                    </v-card-title>
+                    <v-card-text>คุณแน่ใจหรือว่าต้องการลบฟอร์มนี้?</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="indigo" text @click="deleteSurvey = false">
+                        ยกเลิก
+                      </v-btn>
+                      <v-btn color="error" text @click="deleteData()">
+                        ยืนยัน
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+            </v-row>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -97,20 +84,69 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
   data() {
     return {
       deleteSurvey: false,
+      data: [],
+      id: null,
     };
   },
   methods: {
     addSurvey() {
       this.$router.push("/teacher/survey/create");
     },
-    editSurvey() {
-      this$$router.push("teacher/survey/eedit");
-    }
+    editSurvey(
+      id,
+      title,
+      subTitle,
+      question,
+      numberStudentDS,
+      numberStudentSI
+    ) {
+      console.log(
+        id,
+        title,
+        subTitle,
+        question,
+        numberStudentDS,
+        numberStudentSI
+      );
+      this.$router.push({
+        path: "/teacher/survey/edit",
+        query: {
+          id: id,
+          title: title,
+          subTitle: subTitle,
+          question: question,
+          numberStudentDS: numberStudentDS,
+          numberStudentSI: numberStudentSI,
+        },
+      });
+    },
+    setid(id) {
+      this.id = id;
+    },
+    deleteData() {
+      console.log(this.id);
+      this.deleteSurvey = false;
+      Axios.get("http://localhost:4000/survey/delete/"+this.id).then(
+        (res) => {
+          console.log(res.data.data);
+          const removeIndex = this.data.findIndex((t) => t.id === this.id);
+          // remove object
+          this.data.splice(removeIndex, 1);
+        }
+      );
+    },
   },
+  beforeMount() {
+    Axios.get("http://localhost:4000/survey/getAll").then((res) => {
+      console.log(res.data.data);
+      this.data = res.data.data
+    } );
+  }
 };
 </script>
 

@@ -7,12 +7,11 @@
       <v-row justify="center">
       <v-col cols="12">
         <div class="mt-8 text-primary text-announce text-center">
-          ยินดีด้วย!
+          คุณได้รับการอนุมัติ!
         </div>
       </v-col>
       <v-col cols="12">
         <div class="mt-8 text-center">
-          คุณผ่านการคัดเลือก <br />
           กลุ่มวิชา xxx
         </div>
       </v-col>

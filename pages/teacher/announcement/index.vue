@@ -71,7 +71,10 @@
                       >
                         ยกเลิก
                       </v-btn>
-                      <v-btn color="error" text @click="deleteData()">
+                      <v-btn 
+                      color="error" 
+                      text 
+                      @click="deleteData()">
                         ยืนยัน
                       </v-btn>
                     </v-card-actions>
@@ -80,34 +83,6 @@
               </v-col>
             </v-row>
           </div>
-          <!-- <v-row justify="center">
-            <v-col cols="1"> 2 </v-col>
-            <v-col cols="6" md="auto">
-              ประกาศรับและเงื่อนไขของกลุ่มวิชา ปี 2566
-            </v-col>
-            <v-col cols="3">
-              <v-btn icon color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row> -->
-          <!-- <v-row justify="center">
-            <v-col cols="1"> 3 </v-col>
-            <v-col cols="6" md="auto">
-              ประกาศรับและเงื่อนไขของกลุ่มวิชา ปี 2567
-            </v-col>
-            <v-col cols="3">
-              <v-btn icon color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row> -->
         </v-col>
       </v-row>
     </v-container>
@@ -132,7 +107,7 @@ export default {
       console.log(id, title, subTitle);
       this.$router.push({
         path: "/teacher/announcement/edit",
-        query: { id: id, title: title, subTitle, subTitle },
+        query: { id: id, title: title, subTitle: subTitle },
       });
       // this.$router.push("/teacher/announcement/edit");
     },

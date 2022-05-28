@@ -55,10 +55,7 @@ export default {
     validate() {
       let validated = true;
       const errors = [];
-      const validatorField = [
-        "title",
-        "subTitle",
-      ];
+      const validatorField = ["title", "subTitle"];
       validatorField.forEach((field) => {
         if (this.form[field] == "") {
           validated = false;
@@ -82,15 +79,11 @@ export default {
       if (this.validate()) {
         this.$store.dispatch("setAnnoucement", this.form);
         // this.$router.push("/information/page2");
-        Axios.post("http://localhost:4000/annoucement",data).then((res) =>{
-         console.log(res.data.data) 
-         this.$router.push("/teacher/announcement");
-        }
-        
-        
-      );
+        Axios.post("http://localhost:4000/annoucement", data).then((res) => {
+          console.log(res.data.data);
+          this.$router.push("/teacher/announcement");
+        });
       }
-      
     },
   },
 };
