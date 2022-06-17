@@ -7,7 +7,8 @@
       <v-row justify="center">
         <v-col cols="11">
           <div class="mt-2 text-primary text-title text-center">
-            การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี 2565
+            การเลือกกลุ่มวิชา (แขนง) ในสาขาวิทยาการข้อมูลและนวัตกรรมซอฟต์แวร์ ปี
+            2565
           </div>
         </v-col>
         <v-col cols="11">
@@ -66,12 +67,29 @@
         <v-col cols="11">
           <hr />
           <p class="mt-4">โปรดเลือกเพียง 1 กลุ่มวิชา</p>
-          <v-radio-group v-model="subject" column>
+          <v-radio-group v-model="subject" column v-if="res == 3">
             <v-radio
               label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)"
               value="DataScience"
             ></v-radio>
             <v-radio
+              label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)"
+              value="SoftwareInnovation"
+            ></v-radio>
+          </v-radio-group>
+          <v-radio-group v-model="subject" column>
+            <v-radio
+              v-if="res == 0"
+              label="ไม่ผ่านเงื่อนไขของรายวิชา"
+              value="NotPass"
+            ></v-radio>
+            <v-radio
+              v-if="res == 2"
+              label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)"
+              value="DataScience"
+            ></v-radio>
+            <v-radio
+              v-if="res == 1"
               label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)"
               value="SoftwareInnovation"
             ></v-radio>
@@ -87,33 +105,82 @@
             กลุ่มวิชากลุ่มนั้นตลอดหลักสูตร***
           </p>
           <v-radio-group v-model="accept" column>
-            <v-radio
-              label="ยอมรับ"
-              value="Yes"
-            ></v-radio>
+            <v-radio label="ยอมรับ" value="Yes"></v-radio>
           </v-radio-group>
-           <v-btn
-              depressed
-              color="second"
-              dark
-              class="w-100 mt-5 my-btn"
-              @click="submit"
-              >ส่งแบบสำรวจ</v-btn
-            >
+          <v-btn
+            depressed
+            color="second"
+            dark
+            class="w-100 mt-5 my-btn"
+            @click="submit"
+            >ส่งแบบสำรวจ</v-btn
+          >
         </v-col>
-        
       </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       subject: null,
       accept: null,
+      res: 0,
     };
+  },
+  beforeMount() {
+    console.log("kkkkk");
+    //  this.initLine()
+    this.getdata();
+  },
+  methods: {
+    getdata() {
+      axios
+        .get("http://localhost:4000/filedata/findIdStudent/63114540113")
+        .then((res) => {
+          this.res = res.data.data;
+          console.log(res.data.data);
+        });
+    },
+    initLine() {
+      window.liff.init(
+        { liffId: "1657218967-qbv2mgek" },
+        () => {
+          if (window.liff.isLoggedIn()) {
+            // const idToken = window.liff.getIDToken();
+            // setIdToken(idToken);
+            window.liff
+              .getProfile()
+              .then((profile) => {
+                console.log(profile.userId);
+                // setDisplayName(profile.displayName);
+                // setPictureUrl(profile.pictureUrl);
+                // setStatusMessage(profile.statusMessage);
+                // setUserId(profile.userId);
+              })
+              .catch((err) => console.error(err));
+            console.log(window.liff);
+          } else {
+            window.liff.login();
+          }
+        },
+        (err) => console.error(err)
+      );
+    },
+    submit() {
+      if (this.accept) {
+        const data = {
+          id: "62aca99a92c88148f071d2b4",
+          selectSubject: this.subject,
+        };
+        axios
+          .post("http://localhost:4000/info/upsubject", data)
+          .then((res) => console.log(res.data.message));
+      }
+    },
   },
 };
 </script>

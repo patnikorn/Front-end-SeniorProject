@@ -3,6 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
+    script: [{ src: 'https://static.line-scdn.net/liff/edge/2/sdk.js', charset: 'utf-8' }],
     titleTemplate: '%s - SeniorProject',
     title: 'SeniorProject',
     htmlAttrs: {
