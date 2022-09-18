@@ -92,7 +92,7 @@ export default {
     },
     submit() {
       const data = {
-        userLineId: "0002",
+        userLineId: "",
         userFirstName: this.form.userFirstName,
         userLastName: this.form.userLastName,
         userIdNumber: this.form.userIdNumber,
