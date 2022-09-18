@@ -71,7 +71,7 @@ export default {
       const formData = new FormData();
       formData.append("files", this.files);
       axios
-        .post("http://localhost:4000/filedata/upload", formData, {})
+        .post("https://server.dssi-ubu.cf/filedata/upload", formData, {})
         .then((res) => {
           console.log(res);
         });

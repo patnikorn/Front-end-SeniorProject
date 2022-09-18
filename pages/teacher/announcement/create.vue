@@ -79,7 +79,7 @@ export default {
       if (this.validate()) {
         this.$store.dispatch("setAnnoucement", this.form);
         // this.$router.push("/information/page2");
-        Axios.post("http://localhost:4000/annoucement", data).then((res) => {
+        Axios.post("https://server.dssi-ubu.cf/annoucement", data).then((res) => {
           console.log(res.data.data);
           this.$router.push("/teacher/announcement");
         });

@@ -67,7 +67,7 @@ export default {
         subTitle: this.subTitle,
       };
       console.log(this.id, this.title, this.subTitle);
-      Axios.post("http://localhost:4000/annoucement/update", data).then(
+      Axios.post("https://server.dssi-ubu.cf/annoucement/update", data).then(
         (res) => {
           console.log(res.data.data);
           this.$router.push("/teacher/announcement");

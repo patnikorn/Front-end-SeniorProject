@@ -12,7 +12,7 @@
       </v-col>
       <v-col cols="12">
         <div class="mt-8 text-center">
-          กลุ่มวิชา xxx
+          กลุ่มวิชา {{this.$route.query.title}}
         </div>
       </v-col>
       <v-col cols="12">
@@ -25,3 +25,4 @@
     </v-container>
   </div>
 </template>
+  

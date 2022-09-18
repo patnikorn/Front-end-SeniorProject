@@ -68,31 +68,14 @@
           <hr />
           <p class="mt-4">โปรดเลือกเพียง 1 กลุ่มวิชา</p>
           <v-radio-group v-model="subject" column v-if="res == 3">
-            <v-radio
-              label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)"
-              value="DataScience"
-            ></v-radio>
-            <v-radio
-              label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)"
-              value="SoftwareInnovation"
-            ></v-radio>
+            <v-radio label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)" value="DataScience"></v-radio>
+            <v-radio label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)" value="SoftwareInnovation"></v-radio>
           </v-radio-group>
           <v-radio-group v-model="subject" column>
-            <v-radio
-              v-if="res == 0"
-              label="ไม่ผ่านเงื่อนไขของรายวิชา"
-              value="NotPass"
-            ></v-radio>
-            <v-radio
-              v-if="res == 2"
-              label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)"
-              value="DataScience"
-            ></v-radio>
-            <v-radio
-              v-if="res == 1"
-              label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)"
-              value="SoftwareInnovation"
-            ></v-radio>
+            <v-radio v-if="res == 0" label="ไม่ผ่านเงื่อนไขของรายวิชา" value="NotPass"></v-radio>
+            <v-radio v-if="res == 2" label="กลุ่มวิชาวิทยาการข้อมูล (Data Science)" value="DataScience"></v-radio>
+            <v-radio v-if="res == 1" label="กลุ่มวิชานวัตกรรมซอฟต์แวร์ (Software Innovation)"
+              value="SoftwareInnovation"></v-radio>
           </v-radio-group>
         </v-col>
         <v-col cols="11">
@@ -107,14 +90,7 @@
           <v-radio-group v-model="accept" column>
             <v-radio label="ยอมรับ" value="Yes"></v-radio>
           </v-radio-group>
-          <v-btn
-            depressed
-            color="second"
-            dark
-            class="w-100 mt-5 my-btn"
-            @click="submit"
-            >ส่งแบบสำรวจ</v-btn
-          >
+          <v-btn depressed color="second" dark class="w-100 mt-5 my-btn" @click="submit">ส่งแบบสำรวจ</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -126,25 +102,25 @@ import axios from "axios";
 export default {
   data() {
     return {
+      userId: "",
       subject: null,
       accept: null,
       res: 0,
     };
   },
   beforeMount() {
-    console.log("kkkkk");
-    //  this.initLine()
-    this.getdata();
+    this.initLine()
+    // this.getdata();
   },
   methods: {
-    getdata() {
-      axios
-        .get("http://localhost:4000/filedata/findIdStudent/63114540113")
-        .then((res) => {
-          this.res = res.data.data;
-          console.log(res.data.data);
-        });
-    },
+    // getdata() {
+    //   axios
+    //     .get("https://server.dssi-ubu.cf/filedata/findIdStudent/63114540015")
+    //     .then((res) => {
+    //       this.res = res.data.data;
+    //       console.log(res.data.data);
+    //     });
+    // },
     initLine() {
       window.liff.init(
         { liffId: "1657218967-qbv2mgek" },
@@ -156,6 +132,27 @@ export default {
               .getProfile()
               .then((profile) => {
                 console.log(profile.userId);
+                axios
+                  .get(`https://server.dssi-ubu.cf/info/checkinfo/${profile.userId}`)
+                  .then((user) => {
+                    this.userId = user.data.data[0].id;
+                    console.log(user.data.data[0].selectSubject)
+                    if (user.data.data[0].selectSubject == "DataScience" || user.data.data[0].selectSubject == "SoftwareInnovation") {
+                      this.$router.push("/student/announcepass");
+                      this.$router.push({
+                        path: "/student/announcepass",
+                        query: { title: user.data.data[0].selectSubject},
+                      });
+                    } if (user.data.data[0].selectSubject == "NotPass") {
+                      this.$router.push("/student/announcenotpass");
+                    }
+                    axios
+                      .get(`https://server.dssi-ubu.cf/filedata/findIdStudent/${user.data.data[0].userIdNumber}`)
+                      .then((res) => {
+                        this.res = res.data.data;
+                        console.log(res.data.data);
+                      });
+                  });
                 // setDisplayName(profile.displayName);
                 // setPictureUrl(profile.pictureUrl);
                 // setStatusMessage(profile.statusMessage);
@@ -169,16 +166,31 @@ export default {
         },
         (err) => console.error(err)
       );
+
+    },
+    colse() {
+      window.liff.closeWindow();
     },
     submit() {
       if (this.accept) {
         const data = {
-          id: "62aca99a92c88148f071d2b4",
+          id: this.userId,
           selectSubject: this.subject,
         };
         axios
-          .post("http://localhost:4000/info/upsubject", data)
-          .then((res) => console.log(res.data.message));
+          .post("https://server.dssi-ubu.cf/info/upsubject", data)
+          .then((res) => {
+            console.log(res.data.message)
+            if (this.subject == "DataScience" || this.subject == "SoftwareInnovation") {
+              this.$router.push("/student/announcepass");
+              this.$router.push({
+                path: "/student/announcepass",
+                query: { title: this.subject },
+              });
+            } else {
+              this.$router.push("/student/announcenotpass");
+            }
+          });
       }
     },
   },

@@ -55,6 +55,7 @@ import Axios from "axios";
 export default {
   data() {
     return {
+      lineid:"",
       form: {
         complaintFirstName: "",
         complaintLastName: "",
@@ -63,7 +64,31 @@ export default {
       },
     };
   },
+  beforeMount() {
+    this.initLine()
+  },
   methods: {
+    initLine() {
+      window.liff.init(
+        { liffId: "1657218967-y27LkPlR" },
+        () => {
+          if (window.liff.isLoggedIn()) {
+            window.liff
+              .getProfile()
+              .then((profile) => {
+                console.log(profile.userId);
+                this.lineid = profile.userId;
+              })
+              .catch((err) => console.error(err));
+            console.log(window.liff);
+          } else {
+            window.liff.login();
+          }
+        },
+        (err) => console.error(err)
+      );
+
+    },
     validate() {
       let validated = true;
       const errors = [];
@@ -90,7 +115,7 @@ export default {
     },
     submit() {
       const data = {
-        userLineId: "0001",
+        userLineId: this.lineid,
         complaintFirstName: this.form.complaintFirstName,
         complaintLastName: this.form.complaintLastName,
         complaintStudentId: this.form.complaintStudentId,
@@ -99,7 +124,7 @@ export default {
       if (this.validate()) {
         this.$store.dispatch("getComplaint", this.form);
         // this.$router.push("/information/page2");
-        Axios.post("http://localhost:4000/complaint",data).then((res) =>
+        Axios.post("https://server.dssi-ubu.cf/complaint",data).then((res) =>
         console.log(res.data.data)
       );
       }

@@ -117,7 +117,7 @@ export default {
     deleteData() {
       console.log(this.id);
       this.deleteAnnoucement = false;
-      Axios.get("http://localhost:4000/annoucement/delete/"+this.id).then(
+      Axios.get("https://server.dssi-ubu.cf/annoucement/delete/"+this.id).then(
         (res) => {
           console.log(res.data.data);
           const removeIndex = this.data.findIndex((t) => t.id === this.id);
@@ -128,7 +128,7 @@ export default {
     },
   },
   beforeMount() {
-    Axios.get("http://localhost:4000/annoucement/getAll").then((res) => {
+    Axios.get("https://server.dssi-ubu.cf/annoucement/getAll").then((res) => {
       console.log(res.data.data);
       this.data = res.data.data;
     });

@@ -135,7 +135,7 @@ export default {
       //   query: {title: this.form.title, subTitle: this.form.subTitle, question: this.form.question, numberStudentDS: this.form.numberStudentDS, numberStudentSI: this.form.numberStudentSI},
       // });
       // if (this.validate()) {
-      //   // Axios.post("http://localhost:4000/survey", data).then((res) => {
+      //   // Axios.post("https://server.dssi-ubu.cf/survey", data).then((res) => {
       //   //   console.log(res.data.data);
       //   //   this.$router.push("/teacher/survey/preview");
       //   // });

@@ -57,6 +57,7 @@ import Axios from "axios";
 export default {
   data() {
     return {
+      lineid:"",
       form: {
         userFirstName: "",
         userLastName: "",
@@ -65,7 +66,37 @@ export default {
       },
     };
   },
+  beforeMount() {
+    console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+     this.initLine();
+  },
   methods: {
+    initLine() {
+      window.liff.init(
+        { liffId: "1657218967-3aeNVPzn" },
+        () => {
+          if (window.liff.isLoggedIn()) {
+            // const idToken = window.liff.getIDToken();
+            // setIdToken(idToken);
+            window.liff
+              .getProfile()
+              .then((profile) => {
+                console.log(profile.userId);
+                this.lineid = profile.userId;
+                // setDisplayName(profile.displayName);
+                // setPictureUrl(profile.pictureUrl);
+                // setStatusMessage(profile.statusMessage);
+                // setUserId(profile.userId);
+              })
+              .catch((err) => console.error(err));
+            console.log(window.liff);
+          } else {
+            window.liff.login();
+          }
+        },
+        (err) => console.error(err)
+      );
+    },
     validate() {
       let validated = true;
       const errors = [];
@@ -92,7 +123,7 @@ export default {
     },
     submit() {
       const data = {
-        userLineId: "0002",
+        userLineId: this.lineid,
         userFirstName: this.form.userFirstName,
         userLastName: this.form.userLastName,
         userIdNumber: this.form.userIdNumber,
@@ -101,7 +132,7 @@ export default {
       if (this.validate()) {
         this.$store.dispatch("setInformation", this.form);
         // this.$router.push("/information/page2");
-        Axios.post("http://localhost:4000/info",data).then((res) =>
+        Axios.post("https://server.dssi-ubu.cf/info",data).then((res) =>
         console.log(res.data.data)
       );
       }

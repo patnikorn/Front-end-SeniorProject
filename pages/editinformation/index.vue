@@ -108,7 +108,7 @@ export default {
       if (this.validate()) {
         this.$store.dispatch("setRegister", this.form);
         // this.$router.push("/register/page2");
-        Axios.post("http://localhost:4000/info/update", data).then((res) =>
+        Axios.post("https://server.dssi-ubu.cf/info/update", data).then((res) =>
           console.log(res.data.data)
         );
       }
@@ -117,7 +117,7 @@ export default {
     get() {},
   },
   beforeMount() {
-    Axios.get("http://localhost:4000/info/62172344b9525d3364fda46e").then(
+    Axios.get("https://server.dssi-ubu.cf/info/62172344b9525d3364fda46e").then(
       (res) => {
         console.log(res.data.data[0].id);
         this.form.userFirstName = res.data.data[0].userFirstName;

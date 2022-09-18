@@ -12,12 +12,12 @@
         </v-col>
         <v-col cols="11">
           <p> กลุ่มวิชา "วิทยาการข้อมูล (Data Science)" </p>
-          <v-row class="pt-2 pb-0">
+          <v-row class="pt-2 pb-0" v-for="item in DataScience">
             <v-col cols="1"> 1 </v-col>
-            <v-col cols="4" md="auto"> นางสาวพัฒนิกร ไถ้เงิน </v-col>
-            <v-col cols="3" md="auto"> 61114440449 </v-col>
-            <v-col cols="4">
-              <v-dialog v-model="editStudent" persistent max-width="600px">
+            <v-col cols="4" md="auto"> {{item.userFirstName}}  {{item.userLastName}} </v-col>
+            <v-col cols="3" md="auto"> {{item.userIdNumber}} </v-col>
+            <!-- <v-col cols="4"> -->
+              <!-- <v-dialog v-model="editStudent" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon small v-bind="attrs" v-on="on" color="indigo">
                     <v-icon>mdi-pencil</v-icon>
@@ -80,8 +80,8 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-              </v-dialog>
-              <v-dialog v-model="deleteStudent" persistent max-width="290">
+              </v-dialog> -->
+              <!-- <v-dialog v-model="deleteStudent" persistent max-width="290">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon small v-bind="attrs" v-on="on" color="error">
                     <v-icon>mdi-delete</v-icon>
@@ -102,120 +102,34 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-              </v-dialog>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 2 </v-col>
-            <v-col cols="4" md="auto"> นายภากร สารีบุตร </v-col>
-            <v-col cols="3" md="auto"> 61114440494 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 3 </v-col>
-            <v-col cols="4" md="auto"> นางสาววรรณสกนธ์ โภคสมบูรณ์ </v-col>
-            <v-col cols="3" md="auto"> 61114440571 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
+              </v-dialog> -->
+            <!-- </v-col> -->
           </v-row>
         </v-col>
         <v-col cols="11">
           <hr />
           <p class="mt-4"> กลุ่มวิชา "นวัตกรรมซอฟต์แวร์ (Software Innovation)" </p>
-          <v-row class="pt-2 pb-0">
+          <v-row class="pt-2 pb-0" v-for="item in SoftwareInnovation">
             <v-col cols="1"> 1 </v-col>
-            <v-col cols="4" md="auto"> นายกนต์ธร แก้วอร่าม </v-col>
-            <v-col cols="3" md="auto"> 61114440018 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 2 </v-col>
-            <v-col cols="4" md="auto"> นายอนุชา สุภาวงศ์ </v-col>
-            <v-col cols="3" md="auto"> 61114440830 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 3 </v-col>
-            <v-col cols="4" md="auto"> นายภัทรพล ผิวเรือง </v-col>
-            <v-col cols="3" md="auto"> 61114440472 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
+            <v-col cols="4" md="auto"> {{item.userFirstName}}  {{item.userLastName}} </v-col>
+            <v-col cols="3" md="auto"> {{item.userIdNumber}} </v-col>
           </v-row>
         </v-col>
         <v-col cols="11">
           <hr />
           <p class="mt-4"> นักศึกษาที่รอการจัดกลุ่มวิชา </p>
-          <v-row class="pt-2 pb-0">
+          <v-row class="pt-2 pb-0" v-for="item in other">
             <v-col cols="1"> 1 </v-col>
-            <v-col cols="4" md="auto"> นายกนต์ธร แก้วอร่าม </v-col>
-            <v-col cols="3" md="auto"> 61114440018 </v-col>
-            <v-col cols="4">
+            <v-col cols="4" md="auto"> {{item.userFirstName}}  {{item.userLastName}} </v-col>
+            <v-col cols="3" md="auto"> {{item.userIdNumber}} </v-col>
+            <!-- <v-col cols="4">
               <v-btn icon small color="indigo">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <v-btn icon small color="error">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 2 </v-col>
-            <v-col cols="4" md="auto"> นายอนุชา สุภาวงศ์ </v-col>
-            <v-col cols="3" md="auto"> 61114440830 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="1"> 3 </v-col>
-            <v-col cols="4" md="auto"> นายภัทรพล ผิวเรือง </v-col>
-            <v-col cols="3" md="auto"> 61114440472 </v-col>
-            <v-col cols="4">
-              <v-btn icon small color="indigo">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-col>
       </v-row>
@@ -224,12 +138,26 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: () => ({
+    DataScience: [],
+    SoftwareInnovation: [],
+    other: [],
     editStudent: false,
     deleteStudent: false,
     subject: "DataScience",
   }),
+  beforeMount() {
+    axios
+      .get(`https://server.dssi-ubu.cf/info`)
+      .then((res) => {
+        this.DataScience = res.data.DataScience
+        this.SoftwareInnovation = res.data.SoftwareInnovation
+        this.other = res.data.other
+        console.log(res.data);
+      });
+  },
 };
 </script>
 
