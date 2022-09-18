@@ -123,7 +123,11 @@ export default {
     },
     submit() {
       const data = {
+<<<<<<< HEAD
         userLineId: this.lineid,
+=======
+        userLineId: "",
+>>>>>>> 8f46f5f83c227d75fa85225c853b9682eccdba67
         userFirstName: this.form.userFirstName,
         userLastName: this.form.userLastName,
         userIdNumber: this.form.userIdNumber,
